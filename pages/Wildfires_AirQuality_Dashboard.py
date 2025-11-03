@@ -13,7 +13,7 @@ DATA_PATH = "data/firms_data.csv"
 # FIRMS data contains last 3 days
 @st.cache_data(ttl=86400)
 def get_firms_data():            
-    firms_url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/26af21577de6312527a09da2b7b3a18c/VIIRS_SNPP_NRT/world/10/{date.today() - timedelta(days=3)}"
+    firms_url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/26af21577de6312527a09da2b7b3a18c/VIIRS_SNPP_NRT/world/3"
     try:
         firms_df = pd.read_csv(firms_url)
         os.makedirs("data", exist_ok=True)
