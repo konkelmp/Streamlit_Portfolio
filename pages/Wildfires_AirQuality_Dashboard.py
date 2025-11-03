@@ -60,7 +60,7 @@ filtered_df = filtered_df[filtered_df['acq_date'] >= cutoff_date]
 
 #  Wildfire Choropleth Map
 st.subheader("🔥 Wildfires")
-fire_map = folium.Map(location=[(lat_min + lat_max), (lon_min + lon_max)], zoom_start=5)
+fire_map = folium.Map(location=[(lat_min + lat_max)/2, (lon_min + lon_max)/2], zoom_start=5)
 
 for _, row in filtered_df.iterrows():
     folium.CircleMarker(
