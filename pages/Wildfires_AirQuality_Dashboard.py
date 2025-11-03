@@ -30,7 +30,7 @@ def get_firms_data():
 # Sidebar
 st.sidebar.title("Dashboard Filters")
 region = st.sidebar.selectbox("Select Region", ["North America", "South America", "Europe", "Asia", "Africa", "Pacifica"])
-date = st.siderbar.selectbox("Select Date", ["Past Day", "Past 3 Days", "Past 10 Days"])
+date = st.sidebar.selectbox("Select Date", ["Past Day", "Past 3 Days", "Past 10 Days"])
 
 #  Region Mapping 
 region_bounds = {
