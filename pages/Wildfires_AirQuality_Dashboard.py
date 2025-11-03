@@ -32,13 +32,14 @@ else:
 start_str = start_date.strftime("%Y-%m-%d")
 
 # ---------------- Wildfire Data (NASA FIRMS) ----------------
-fire_url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv?bbox={bbox[0]},{bbox[1]},{bbox[2]},{bbox[3]}&date={start_str}"
+fire_url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv?bbox={bbox_str}&date={start_str}&key=26af21577de6312527a09da2b7b3a18c"
 fire_df = pd.read_csv(fire_url)
 
-# ---------------- Air Quality Data (OpenAQ) ----------------
-aq_url = f"https://api.openaq.org/v2/measurements?date_from={start_str}&limit=10000&coordinates={bbox[1]},{bbox[0]}"
-aq_response = requests.get(aq_url).json()
-aq_df = pd.DataFrame(aq_response['results'])
+
+#aq_url = f"https://api.openaq.org/v2/measurements?date_from={start_str}&limit=10000&coordinates={bbox[1]},{bbox[0]}"
+#aq_response = requests.get(aq_url).json()
+#aq_df = pd.DataFrame(aq_response['results'])
+##
 
 # ---------------- Wildfire Map ----------------
 st.subheader("🔥 Wildfire Activity Map")
@@ -54,26 +55,26 @@ for _, row in fire_df.iterrows():
 st_folium(fire_map, width=700)
 
 # ---------------- Air Quality Map ----------------
-st.subheader("🌫️ Air Quality Map")
-aq_map = folium.Map(location=[(bbox[1]+bbox[3])/2, (bbox[0]+bbox[2])/2], zoom_start=4)
-for _, row in aq_df.iterrows():
-    folium.CircleMarker(
-        location=[row['coordinates']['latitude'], row['coordinates']['longitude']],
-        radius=3,
-        color='blue',
-        fill=True,
-        fill_opacity=0.6,
-        popup=f"{row['parameter']}: {row['value']} {row['unit']}"
-    ).add_to(aq_map)
-st_folium(aq_map, width=700)
+#st.subheader("🌫️ Air Quality Map")
+#aq_map = folium.Map(location=[(bbox[1]+bbox[3])/2, (bbox[0]+bbox[2])/2], zoom_start=4)
+#for _, row in aq_df.iterrows():
+#    folium.CircleMarker(
+#        location=[row['coordinates']['latitude'], row['coordinates']['longitude']],
+#        radius=3,
+#        color='blue',
+#        fill=True,
+#        fill_opacity=0.6,
+#        popup=f"{row['parameter']}: {row['value']} {row['unit']}"
+#    ).add_to(aq_map)
+#st_folium(aq_map, width=700)
 
 # ---------------- KPI Metrics ----------------
 st.subheader("📊 Key Metrics")
 st.metric("Total Fires", len(fire_df))
-st.metric("Air Quality Samples", len(aq_df))
+#st.metric("Air Quality Samples", len(aq_df))
 
 # ---------------- Line Chart ----------------
-if not aq_df.empty:
-    aq_chart_df = aq_df.groupby('parameter')['value'].mean().reset_index()
-    fig = px.bar(aq_chart_df, x='parameter', y='value', title="Average Pollutant Levels")
-    st.plotly_chart(fig, use_container_width=True)
+#if not aq_df.empty:
+    #aq_chart_df = aq_df.groupby('parameter')['value'].mean().reset_index()
+    #fig = px.bar(aq_chart_df, x='parameter', y='value', title="Average Pollutant Levels")
+    #st.plotly_chart(fig, use_container_width=True)
