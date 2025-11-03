@@ -23,7 +23,9 @@ def get_firms_data():
         st.error("Failed to fetch FIRMS data.")
         return pd.DataFrame()
 
-fire_df = get_firms_data()
+if "firms_data" not in st.session_state:
+    st.session_state.firms_df = get_firms_data()
+firms_data = st.session_state.firms_df
 
 # Sidebar
 st.sidebar.title("Dashboard Filters")
@@ -49,9 +51,9 @@ region_bounds = {
 lon_min, lat_min, lon_max, lat_max = region_bounds[region]
 
 # Filter by region
-filtered_df = fire_df[
-    (fire_df['latitude'] >= lat_min) & (fire_df['latitude'] <= lat_max) &
-    (fire_df['longitude'] >= lon_min) & (fire_df['longitude'] <= lon_max)
+filtered_df = firms_df[
+    (firms_df['latitude'] >= lat_min) & (firms_df['latitude'] <= lat_max) &
+    (firms_df['longitude'] >= lon_min) & (firms_df['longitude'] <= lon_max)
 ]
 
 # Filter by date
