@@ -44,7 +44,7 @@ region_bounds = {
 
 bbox = region_bounds[region]
 
-fire_df = get_firms_data()
+fire_df = pd.read_csv("data/firms_data.csv")
 
 #  Wildfire Choropleth Map
 st.subheader("🔥 Wildfire Activity Map")
