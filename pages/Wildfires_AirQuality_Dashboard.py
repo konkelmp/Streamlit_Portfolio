@@ -26,7 +26,7 @@ fire_df = get_firms_data()
 
 # Sidebar
 st.sidebar.title("Dashboard Filters")
-region = st.sidebar.selectbox("Select Region", ["North America", "South America", "Europe", "Asia", "Africa", "Pacifica"])
+region = st.sidebar.selectbox("Select Region", ["North America", "South America", "Europe", "Asia", "Africa", "Oceania"])
 time_range = st.sidebar.selectbox("Select Time Range", ["Past Day", "Past 3 Days", "Past 10 Days"])
 
 days = {"Past Day": 1,
@@ -43,7 +43,7 @@ region_bounds = {
     "Europe": [-25, 35, 45, 70],
     "Asia": [60, 5, 150, 60],
     "Africa": [-20, -35, 55, 35],
-    "Pacifica": [120, -50, -120, 50]
+    "Oceania": [110, -50, 180, 10]
 }
 lon_min, lat_min, lon_max, lat_max = region_bounds[region]
 
