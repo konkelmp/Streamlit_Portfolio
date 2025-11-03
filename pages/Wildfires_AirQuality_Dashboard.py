@@ -63,9 +63,3 @@ st_folium(fire_map, width=700)
 #  KPI Metrics
 st.subheader("📊 Key Metrics")
 st.metric("Total Fires", len(fire_df))
-
-# ---------------- Line Chart ----------------
-#if not aq_df.empty:
-    #aq_chart_df = aq_df.groupby('parameter')['value'].mean().reset_index()
-    #fig = px.bar(aq_chart_df, x='parameter', y='value', title="Average Pollutant Levels")
-    #st.plotly_chart(fig, use_container_width=True)
