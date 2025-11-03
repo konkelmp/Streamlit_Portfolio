@@ -30,15 +30,9 @@ def get_firms_data():
 # Sidebar
 st.sidebar.title("Dashboard Filters")
 region = st.sidebar.selectbox("Select Region", ["North America", "South America", "Europe", "Asia", "Africa", "Pacifica"])
-selected_date = st.sidebar.date_input(
-    "Select Start Date",
-    value=datetime.utcnow().date() - timedelta(days=1),
-    min_value=datetime.utcnow().date() - timedelta(days=30),
-    max_value=datetime.utcnow().date()
-)
-start_str = selected_date.strftime("%Y-%m-%d")
+date = st.siderbar.selectbox("Select Date", ["Past Day", "Past 3 Days", "Past 10 Days"])
 
-# ---------------- Region Mapping ----------------
+#  Region Mapping 
 region_bounds = {
     "North America": [-170, 15, -50, 75],
     "South America": [-90, -60, -30, 15],
@@ -50,16 +44,9 @@ region_bounds = {
 
 bbox = region_bounds[region]
 
-
 fire_df = get_firms_data(bbox)
 
-
-#aq_url = f"https://api.openaq.org/v2/measurements?date_from={start_str}&limit=10000&coordinates={bbox[1]},{bbox[0]}"
-#aq_response = requests.get(aq_url).json()
-#aq_df = pd.DataFrame(aq_response['results'])
-##
-
-# ---------------- Wildfire Map ----------------
+#  Wildfire Choropleth Map
 st.subheader("🔥 Wildfire Activity Map")
 fire_map = folium.Map(location=[(bbox[1]+bbox[3])/2, (bbox[0]+bbox[2])/2], zoom_start=4)
 for _, row in fire_df.iterrows():
@@ -72,24 +59,10 @@ for _, row in fire_df.iterrows():
     ).add_to(fire_map)
 st_folium(fire_map, width=700)
 
-# ---------------- Air Quality Map ----------------
-#st.subheader("🌫️ Air Quality Map")
-#aq_map = folium.Map(location=[(bbox[1]+bbox[3])/2, (bbox[0]+bbox[2])/2], zoom_start=4)
-#for _, row in aq_df.iterrows():
-#    folium.CircleMarker(
-#        location=[row['coordinates']['latitude'], row['coordinates']['longitude']],
-#        radius=3,
-#        color='blue',
-#        fill=True,
-#        fill_opacity=0.6,
-#        popup=f"{row['parameter']}: {row['value']} {row['unit']}"
-#    ).add_to(aq_map)
-#st_folium(aq_map, width=700)
 
-# ---------------- KPI Metrics ----------------
+#  KPI Metrics
 st.subheader("📊 Key Metrics")
 st.metric("Total Fires", len(fire_df))
-#st.metric("Air Quality Samples", len(aq_df))
 
 # ---------------- Line Chart ----------------
 #if not aq_df.empty:
