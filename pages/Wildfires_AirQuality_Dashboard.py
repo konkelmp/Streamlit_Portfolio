@@ -59,7 +59,7 @@ filtered_df['acq_date'] = pd.to_datetime(filtered_df['acq_date']).dt.date
 filtered_df = filtered_df[filtered_df['acq_date'] >= cutoff_date]
 
 #  Wildfire Choropleth Map
-st.subheader("🔥 Wildfires")
+st.subheader(f"🔥 Wildfires in {region}")
 fire_map = folium.Map(location=[(lat_min + lat_max)/2, (lon_min + lon_max)/2], zoom_start=3)
 
 for _, row in filtered_df.iterrows():
