@@ -9,21 +9,11 @@ st.set_page_config(
 st.title(" Welcome to My Streamlit Site")
 st.markdown(
     """
-    This is a two-page Streamlit app:
-    - **Bio**: who I am
-    - **Visualization**: a tiny interactive chart
+    This is a Streamlit Dashboard app for displaying regional wildfire and air quality data:
+    - Preston Konkel
 
-    Use the left sidebar to switch pages.
+    Use the left sidebar switch regions and data time ranges.
     """
 )
 
-with st.expander("How this app is organized (for students)"):
-    st.write(
-        """
-        - `app.py` is the entry point.
-        - Pages live in the `/pages` folder and auto-appear in the sidebar.
-        - Edit `pages/1_Bio.py` and `pages/2_Visualization.py` to complete the assignment.
-        """
-    )
-
-st.caption("Built with Streamlit • Class template")
+st.caption("Built with Streamlit")
