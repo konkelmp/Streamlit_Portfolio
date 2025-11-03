@@ -6,10 +6,16 @@ from streamlit_folium import st_folium
 import plotly.express as px
 from datetime import datetime, timedelta
 
-# ---------------- Sidebar ----------------
+# Sidebar
 st.sidebar.title("Dashboard Filters")
 region = st.sidebar.selectbox("Select Region", ["North America", "South America", "Europe", "Asia", "Africa", "Pacifica"])
-time_range = st.sidebar.selectbox("Select Time Range", ["Past 24 Hours", "Past Week", "Past Month"])
+selected_date = st.sidebar.date_input(
+    "Select Start Date",
+    value=datetime.utcnow().date() - timedelta(days=1),
+    min_value=datetime.utcnow().date() - timedelta(days=30),
+    max_value=datetime.utcnow().date()
+)
+start_str = selected_date.strftime("%Y-%m-%d")
 
 # ---------------- Region Mapping ----------------
 region_bounds = {
@@ -18,7 +24,7 @@ region_bounds = {
     "Europe": [-25, 35, 45, 70],
     "Asia": [60, 5, 150, 60],
     "Africa": [-20, -35, 55, 35],
-    "Pacifica": [120, -50, -120, 50]  # Pacific region across dateline
+    "Pacifica": [120, -50, -120, 50]
 }
 
 bbox = region_bounds[region]
