@@ -9,6 +9,8 @@ from datetime import datetime, timedelta, date
 
 DATA_PATH = "data/firms_data.csv"
 
+# Cache FIRMS data for 24hrs
+# FIRMS data contains last 10 days
 @st.cache_data(ttl=86400)
 def get_firms_data():            
     firms_url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/26af21577de6312527a09da2b7b3a18c/VIIRS_SNPP_NRT/world/10/{date.today()}"
@@ -20,10 +22,21 @@ def get_firms_data():
         st.error("Failed to fetch FIRMS data.")
         return pd.DataFrame()
 
+fire_df = get_firms_data()
+
 # Sidebar
 st.sidebar.title("Dashboard Filters")
 region = st.sidebar.selectbox("Select Region", ["North America", "South America", "Europe", "Asia", "Africa", "Pacifica"])
 time_range = st.sidebar.selectbox("Select Time Range", ["Past Day", "Past 3 Days", "Past 10 Days"])
+
+days = {
+        "Past Day": 1,
+        "Past 3 Days": 3,
+        "Past 10 Days: 10
+        }
+        
+days_back = days[time_range]
+cutoff_date = datetime.utcnow().date() - timedelta(days=days_back)
 
 #  Region Mapping 
 region_bounds = {
@@ -34,25 +47,35 @@ region_bounds = {
     "Africa": [-20, -35, 55, 35],
     "Pacifica": [120, -50, -120, 50]
 }
+lon_min, lat_min, lon_max, lat_max = region_bounds[region]
 
-bbox = region_bounds[region]
+# Filter by region
+filtered_df = fire_df[
+    (fire_df['latitude'] >= lat_min) & (fire_df['latitude'] <= lat_max) &
+    (fire_df['longitude'] >= lon_min) & (fire_df['longitude'] <= lon_max)
+]
 
-fire_df = get_firms_data()
+# Filter by acquisition date
+filtered_df['acq_date'] = pd.to_datetime(filtered_df['acq_date']).dt.date
+filtered_df = filtered_df[filtered_df['acq_date'] >= cutoff_date]
 
 #  Wildfire Choropleth Map
 st.subheader("🔥 Wildfire Activity Map")
-fire_map = folium.Map(location=[(bbox[1]+bbox[3])/2, (bbox[0]+bbox[2])/2], zoom_start=4)
-for _, row in fire_df.iterrows():
+fire_map = folium.Map(location=[(lat_min + lat_max)/2, (lon_min + lon_max)/2], zoom_start=4)
+
+for _, row in filtered_df.iterrows():
     folium.CircleMarker(
         location=[row['latitude'], row['longitude']],
         radius=3,
         color='red',
         fill=True,
-        fill_opacity=0.7
+        fill_opacity=0.7,
+        popup=f"Date: {row['acq_date']}"
     ).add_to(fire_map)
+
 st_folium(fire_map, width=700)
 
 
 #  KPI Metrics
 st.subheader("📊 Key Metrics")
-st.metric("Total Fires", len(fire_df))
+st.metric("Total Fires", len(filtered_df))
