@@ -48,6 +48,13 @@ region_bounds = {
 }
 lon_min, lat_min, lon_max, lat_max = region_bounds[region]
 
+# Apply filters before rendering
+filtered_df = fire_df[
+    (fire_df['latitude'] >= lat_min) & (fire_df['latitude'] <= lat_max) &
+    (fire_df['longitude'] >= lon_min) & (fire_df['longitude'] <= lon_max) &
+    (fire_df['acq_date'] >= cutoff_date)
+]
+
 # Filter by region
 filtered_df = fire_df[
     (fire_df['latitude'] >= lat_min) & (fire_df['latitude'] <= lat_max) &
@@ -55,8 +62,8 @@ filtered_df = fire_df[
 ]
 
 # Filter by acquisition date
-filtered_df['acq_date'] = pd.to_datetime(filtered_df['acq_date']).dt.date
-filtered_df = filtered_df[filtered_df['acq_date'] >= cutoff_date]
+#filtered_df['acq_date'] = pd.to_datetime(filtered_df['acq_date']).dt.date
+#filtered_df = filtered_df[filtered_df['acq_date'] >= cutoff_date]
 
 #  Wildfire Choropleth Map
 st.subheader(f"🔥 Wildfires in {region}")
