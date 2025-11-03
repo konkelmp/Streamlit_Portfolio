@@ -27,16 +27,6 @@ region_bounds = {
     "Pacifica": [120, -50, -120, 50]
 }
 
-bbox = region_bounds[region]
-start_date = datetime.utcnow()
-if time_range == "Past 24 Hours":
-    start_date -= timedelta(days=1)
-elif time_range == "Past Week":
-    start_date -= timedelta(days=7)
-else:
-    start_date -= timedelta(days=30)
-start_str = start_date.strftime("%Y-%m-%d")
-
 # ---------------- Wildfire Data (NASA FIRMS) ----------------
 fire_url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/26af21577de6312527a09da2b7b3a18c/VIIRS_SNPP_NRT/world/1"
 fire_df = pd.read_csv(fire_url)
