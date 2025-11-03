@@ -6,6 +6,7 @@ import folium
 import plotly.express as px
 from streamlit_folium import st_folium
 from datetime import datetime, timedelta, date
+from folium.plugins import MarkerCluster
 
 DATA_PATH = "data/firms_data.csv"
 
@@ -63,6 +64,7 @@ filtered_df = filtered_df[filtered_df['acq_date'] >= cutoff_date]
 #  Wildfire Choropleth Map
 st.subheader(f"🔥 Wildfires in {region}")
 fire_map = folium.Map(location=[(lat_min + lat_max)/2, (lon_min + lon_max)/2], zoom_start=3)
+marker_cluster = MarkerCluster().add_to(fire_map)
 
 for _, row in filtered_df.iterrows():
     folium.CircleMarker(
@@ -72,7 +74,7 @@ for _, row in filtered_df.iterrows():
         fill=True,
         fill_opacity=0.7,
         popup=f"Date: {row['acq_date']}"
-    ).add_to(fire_map)
+    ).add_to(marker_cluster)
 
 st_folium(fire_map, width=700)
 
