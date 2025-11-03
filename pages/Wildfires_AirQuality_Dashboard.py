@@ -29,11 +29,9 @@ st.sidebar.title("Dashboard Filters")
 region = st.sidebar.selectbox("Select Region", ["North America", "South America", "Europe", "Asia", "Africa", "Pacifica"])
 time_range = st.sidebar.selectbox("Select Time Range", ["Past Day", "Past 3 Days", "Past 10 Days"])
 
-days = {
-        "Past Day": 1,
+days = {"Past Day": 1,
         "Past 3 Days": 3,
-        "Past 10 Days: 10
-        }
+        "Past 10 Days": 10}
         
 days_back = days[time_range]
 cutoff_date = datetime.utcnow().date() - timedelta(days=days_back)
