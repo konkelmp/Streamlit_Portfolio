@@ -29,7 +29,7 @@ def get_firms_data():
     try:
         firms_df = pd.read_csv(firms_url)
         os.makedirs("data", exist_ok=True)
-        firms_df.to_csv(DATA_PATH, index=False)
+        #firms_df.to_csv(DATA_PATH, index=False)
         return firms_df
     except Exception as e:
         st.error("Failed to fetch FIRMS data.")
