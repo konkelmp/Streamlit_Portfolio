@@ -1,5 +1,7 @@
+import os
+import requests
 import streamlit as st
-import pandas
+import pandas as pd
 
 st.set_page_config(
     page_title="My Streamlit Site",
