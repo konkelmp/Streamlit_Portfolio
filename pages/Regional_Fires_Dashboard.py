@@ -15,7 +15,7 @@ st.set_page_config(
 firms_df = st.session_state.get("firms_df")
 
 if firms_df is None or firms_df.empty:
-    st.warning("No FIRMS data available. Please refresh or check the API.")
+    st.warning("No FIRMS data available. Please refresh from Home Page.")
     st.stop()
     
 ###########################################
