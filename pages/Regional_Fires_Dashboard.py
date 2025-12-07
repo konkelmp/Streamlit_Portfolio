@@ -68,7 +68,7 @@ if (confidence != ""):
 
 ###########################################
 
-col1, col2, col3 = st.columns([2, 2, 1])
+col1, col2, col3 = st.columns([3, 2, 1])
 
 # Folium map
 with col1:
@@ -86,7 +86,7 @@ with col1:
             popup=f"Date: {row['acq_date']} | Confidence: {row['confidence']}"
         ).add_to(marker_cluster)
 
-    st_folium(fire_map, width=500, height=300)
+    st_folium(fire_map, width=500, height=500)
 
 # Right column: Line chart of daily fire counts
 with col2:
