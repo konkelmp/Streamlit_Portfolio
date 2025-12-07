@@ -73,6 +73,7 @@ fig3 = px.scatter(
     x="longitude",
     y="latitude",
     color="frp",
+    color_continuous_scale="reds",
     hover_data=["acq_date", "confidence", "satellite"],
     title="Fire Locations with FRP Intensity"
 )
@@ -94,7 +95,7 @@ st.markdown(
     - Fires cluster in equatorial Africa, western US, and South America.
     - High-FRP fires appear scattered but align with known fire-prone zones.
     - Dense clusters of low-FRP fires suggest widespread small burns.
-    - Interactive hover reveals temporal and satellite details.
+    - Higher latitude means fewer fires.
     """
 )
 
