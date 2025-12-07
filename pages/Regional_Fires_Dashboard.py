@@ -55,8 +55,8 @@ if firms_df['confidence'].dtype == 'object':
     filtered_df = filtered_df[filtered_df['confidence'].isin(confidence)]
 else:
     filtered_df = filtered_df[
-        (filtered_df['confidence'] >= confidence_selected[0]) &
-        (filtered_df['confidence'] <= confidence_selected[1])
+        (filtered_df['confidence'] >= confidences[0]) &
+        (filtered_df['confidence'] <= confidences[1])
     ]
 
 ###########################################
