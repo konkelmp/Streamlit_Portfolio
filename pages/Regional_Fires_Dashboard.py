@@ -86,7 +86,7 @@ with col1:
             popup=f"Date: {row['acq_date']} | Confidence: {row['confidence']}"
         ).add_to(marker_cluster)
 
-    st_folium(fire_map, width=500, height=500)
+    st_folium(fire_map, width=500, height=400)
 
 # Right column: Line chart of daily fire counts
 with col2:
