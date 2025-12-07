@@ -29,7 +29,6 @@ def get_firms_data():
     try:
         firms_df = pd.read_csv(firms_url)
         os.makedirs("data", exist_ok=True)
-        #firms_df.to_csv(DATA_PATH, index=False)
         return firms_df
     except Exception as e:
         st.error("Failed to fetch FIRMS data.")
@@ -37,3 +36,7 @@ def get_firms_data():
 
 if "firms_df" not in st.session_state:
     st.session_state.firms_df = get_firms_data()
+
+st.write("Rows loaded:", len(st.session_state.firms_df))
+st.write(st.session_state.firms_df.head())
+
