@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -13,9 +12,7 @@ if firms_df is None or firms_df.empty:
 
 st.title("📊 EDA Gallery (Exploratory Data Analysis Showcase)")
 
-###########################################
 # 1. Bar Chart – Fires by Confidence Level
-###########################################
 st.subheader("1️⃣ Fires by Confidence Level")
 st.write("**Question explored:** How many fires were detected at each confidence level in the selected time range?")
 
@@ -40,9 +37,7 @@ st.markdown(
   """
 )
 
-###########################################
 # 2. Histogram – Distribution of FRP
-###########################################
 st.subheader("2️⃣ Distribution of Fire Radiative Power (FRP)")
 st.write("**Question explored:** What is the distribution of fire intensity (FRP) among detected fires?")
 
@@ -65,9 +60,7 @@ st.markdown("""
 - Highlights importance of monitoring high-FRP events.
 """)
 
-###########################################
 # 3. Scatter Plot – Location vs FRP
-###########################################
 st.subheader("3️⃣ Fire Locations and Intensity")
 st.write("**Question explored:** Where are fires located geographically, and how does FRP vary across locations?")
 
@@ -97,9 +90,7 @@ st.markdown("""
 - Interactive hover reveals temporal and satellite details.
 """)
 
-###########################################
 # 4. Box Plot – FRP by Day/Night
-###########################################
 st.subheader("4️⃣ FRP by Day vs Night Detection")
 st.write("**Question explored:** How does fire intensity (FRP) differ between day and night detections?")
 
