@@ -20,7 +20,7 @@ confidence_select = st.sidebar.selectbox("Select Confidence Level", ["Low", "Med
 days = {"Past Day": 1,
         "Past 2 Days": 2,
         "Past 3 Days": 3}
-days_back = days[time_range]
+days_back = days[time_range_select]
 cutoff_date = datetime.utcnow().date() - timedelta(days=days_back)
 
 #  Region Mapping 
