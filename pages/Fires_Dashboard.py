@@ -105,6 +105,21 @@ st.metric("Total Fires", len(filtered_df))
 avg_frp = round(filtered_df['frp'].mean(), 2)
 st.metric("Average Fire Radiative Power (FRP) in MegaWatts", avg_frp)
 
+###########################################
+
+# Dashboard Insights
+st.subheader("💡 Dashboard Insights")
+st.markdown(
+    """
+    - Fire detections are **concentrated in specific regions** (e.g., equatorial Africa and western North America), while other areas show relatively sparse activity.  
+    - The majority of detections fall into the **Nominal confidence category**, with fewer but more reliable **High confidence fires**.  
+    - **FRP values are highly skewed**: most fires have low radiative power, but a small number of extreme outliers dominate the upper range.  
+    - **Day vs Night detections differ in spread**: nighttime fires show greater variability in FRP, while daytime detections cluster more tightly.  
+    - Over the selected time ranges, **fire counts fluctuate modestly**, but the short window (1–3 days) limits visibility into longer‑term trends.  
+    - Data is constrained by **satellite coverage and detection thresholds**; smaller or short‑lived fires may not be captured, so counts represent detections rather than all fire events.
+    """
+)
+
 day_count = (filtered_df['daynight'] == "D").sum()
 night_count = (filtered_df['daynight'] == "N").sum()
 st.metric("Detection Day or Night", f"Day: {day_count} \n Night: {night_count}")
