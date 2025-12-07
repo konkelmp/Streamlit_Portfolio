@@ -101,15 +101,15 @@ with col1:
 #  KPI Metrics
 st.subheader("📊 Key Metrics")
 
-st.metric("Total Fires", len(filtered_df))
-avg_frp = round(filtered_df['frp'].mean(), 2)
+st.metric("Total Fires", len(region_df))
+avg_frp = round(region_df['frp'].mean(), 2)
 st.metric("Average Fire Radiative Power (FRP) in MegaWatts", avg_frp)
 
-day_count = (filtered_df['daynight'] == "D").sum()
-night_count = (filtered_df['daynight'] == "N").sum()
+day_count = (region_df['daynight'] == "D").sum()
+night_count = (region_df['daynight'] == "N").sum()
 st.metric("Detection Day or Night", f"Day: {day_count} \n Night: {night_count}")
 
-st.metric("Top Reporting Satellite", filtered_df['satellite'].mode()[0])
+st.metric("Top Reporting Satellite", region_df['satellite'].mode()[0])
 
 ###########################################
 
