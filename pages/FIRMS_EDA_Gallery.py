@@ -91,20 +91,23 @@ st.markdown(
 )
 
 st.markdown("**Observations:**")
-st.markdown("""
-- Fires cluster in equatorial Africa, western US, and South America.
-- High-FRP fires appear scattered but align with known fire-prone zones.
-- Dense clusters of low-FRP fires suggest widespread small burns.
-- Interactive hover reveals temporal and satellite details.
-""")
+st.markdown(
+    """
+    - Fires cluster in equatorial Africa, western US, and South America.
+    - High-FRP fires appear scattered but align with known fire-prone zones.
+    - Dense clusters of low-FRP fires suggest widespread small burns.
+    - Interactive hover reveals temporal and satellite details.
+    """
+)
 
 # 4. Box Plot – FRP by Day/Night
 st.subheader("4️⃣ FRP by Day vs Night Detection")
 st.write("**Question explored:** How does fire intensity (FRP) differ between day and night detections?")
 
-fig4 = px.box(firms_df, x="daynight", y="frp", title="FRP by Day/Night")
-st.plotly_chart(fig4, use_container_width=True)
+fig4 = px.box(firms_df, x="Day/Night", y="FRP (MW)", title="FRP by Day/Night")
 fig4.update_yaxes(type="log")
+st.plotly_chart(fig4, use_container_width=True)
+
 
 st.markdown("**How to read this chart:**")
 st.markdown(
