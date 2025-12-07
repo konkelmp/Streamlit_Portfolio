@@ -42,7 +42,7 @@ st.markdown(
 st.subheader("2️⃣ Distribution of Fire Radiative Power (FRP)")
 st.write("**Question:** What is the distribution of fire intensity (FRP) among detected fires?")
 
-fig2 = px.histogram(firms_df, x="frp", nbins=30, title="FRP Distribution (MW)", color="frp", color_continuous_scale="reds")
+fig2 = px.histogram(firms_df, x="frp", nbins=30, title="FRP Distribution (MW)")
 st.plotly_chart(fig2, use_container_width=True)
 
 st.markdown("**How to read this chart:**")
