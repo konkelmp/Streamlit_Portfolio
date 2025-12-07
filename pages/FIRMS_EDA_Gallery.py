@@ -12,11 +12,13 @@ if firms_df is None or firms_df.empty:
 
 st.title("📊 EDA Gallery (Exploratory Data Analysis Showcase)")
 
+st.subheader("Note: Observations are descriptive of past data and may not reflect most recent data")
+
 # 1. Bar Chart of Fires by Confidence Level
 st.subheader("1️⃣ Fires by Confidence Level")
-st.write("How many fires were detected at each confidence level in the selected time range?")
+st.write("How many fires were detected at each confidence level in the past 3 days?")
 
-fig1 = px.bar(firms_df, x="confidence", title="Fires by Confidence Level")
+fig1 = px.bar(firms_df, x="confidence", title="Fires by Confidence Level", color="confidence")
 st.plotly_chart(fig1, use_container_width=True)
 
 st.markdown("**How to read this chart:**")
@@ -24,8 +26,6 @@ st.markdown(
     """
     - X-axis shows confidence categories (Low, Nominal, High).
     - Y-axis shows number of detections.
-    - Taller bars = more fires at that confidence level.
-    - Colors distinguish categories.
     """
 )
 
@@ -43,7 +43,7 @@ st.markdown(
 st.subheader("2️⃣ Distribution of Fire Radiative Power (FRP)")
 st.write("**Question:** What is the distribution of fire intensity (FRP) among detected fires?")
 
-fig2 = px.histogram(firms_df, x="frp", nbins=30, title="FRP Distribution (MW)")
+fig2 = px.histogram(firms_df, x="frp", nbins=30, title="FRP Distribution (MW)", color="frp")
 st.plotly_chart(fig2, use_container_width=True)
 
 st.markdown("**How to read this chart:**")
@@ -61,7 +61,7 @@ st.markdown(
     """
     - Most fires cluster at low FRP (< 20 MW).
     - A few extreme outliers exceed 200 MW.
-    - Distribution is right-skewed: many small fires, few intense ones.
+    - Distribution is heavily right-skewed: many small fires, few intense ones.
     - Highlights importance of monitoring high-FRP events.
     """
 )
@@ -86,7 +86,7 @@ st.markdown(
     - Each point = one fire detection.
     - X-axis = longitude, Y-axis = latitude.
     - Color encodes FRP intensity (lighter = weaker, darker = stronger).
-    - Hover shows date, confidence, and satellite.
+    - Hover shows date, confidence, and satellite information.
     """
 )
 
@@ -108,12 +108,11 @@ fig4 = px.box(firms_df, x="daynight", y="frp", title="FRP by Day/Night")
 fig4.update_yaxes(type="log")
 st.plotly_chart(fig4, use_container_width=True)
 
-
 st.markdown("**How to read this chart:**")
 st.markdown(
     """
     - X-axis shows Day vs Night categories.
-    - Y-axis shows FRP values (MW).
+    - Y-axis shows FRP values (MW) and is scaled logarithmically.
     - Box shows median, quartiles, and spread.
     - Outliers plotted as individual points.
     """
