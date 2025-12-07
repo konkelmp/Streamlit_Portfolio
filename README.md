@@ -8,9 +8,9 @@ Serves as a tool to gain understanding about current fires densities and intensi
 It includes a home landing page, a bio page, EDA gallery, interactive dashboard, and future works pages.
 
 ## Dataset Information
-**Name:** NASA FIRMS
-**Source:** https://firms.modaps.eosdis.nasa.gov/api/area/csv/API_KEY/VIIRS_SNPP_NRT/world/3
-**Number of records:** Varies but generally > 5,000
+**Name:** NASA FIRMS \
+**Source:** https://firms.modaps.eosdis.nasa.gov/api/area/csv/API_KEY/VIIRS_SNPP_NRT/world/3 \
+**Number of records:** Varies but generally > 5,000 \
 This site uses the NASA FIRMS API to query the past 3 days of fire area information. The data is cached each day and only one call per 24 hours is made.
 
 ## Requirements
