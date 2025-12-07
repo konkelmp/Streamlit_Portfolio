@@ -83,14 +83,13 @@ st_folium(fire_map, width=700)
 
 #  KPI Metrics
 st.subheader("📊 Key Metrics")
+
 st.metric("Total Fires", len(filtered_df))
 avg_frp = round(filtered_df['frp'].mean(), 2)
-st.metric("Average FRP", avg_frp)
+st.metric("Average Fire Radiative Power (FRP)", avg_frp)
 
 day_count = (filtered_df['daynight'] == "D").sum()
 night_count = (filtered_df['daynight'] == "N").sum()
-st.metric("Day vs Night", f"{day_count} / {night_count}")
+st.metric("Detection Day or Night", f"{day_count} / {night_count}")
 
-latest_date = filtered_df['acq_date'].max()
-st.metric("Latest Detection", str(latest_date))
-
+st.metric("Top Reporting Satellite", filtered_df['satellite'].mode()[0])
