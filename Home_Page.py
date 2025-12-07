@@ -1,4 +1,3 @@
-import os
 import requests
 import streamlit as st
 import pandas as pd
@@ -28,7 +27,7 @@ def get_firms_data():
     firms_url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/26af21577de6312527a09da2b7b3a18c/VIIRS_SNPP_NRT/world/3"
     try:
         firms_df = pd.read_csv(firms_url)
-        os.makedirs("data", exist_ok=True)
+        last_refreshed = datetime.datetime.utcnow()
         return firms_df
     except Exception as e:
         st.error("Failed to fetch FIRMS data.")
