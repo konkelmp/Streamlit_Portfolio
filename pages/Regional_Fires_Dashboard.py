@@ -50,12 +50,7 @@ confidences = {"All": "", "Low": "l", "Nominal": "n", "High": "h"}
 confidence = confidences[confidence_select]
 
 ###########################################
-
-# Filter by region
-filtered_df = firms_df[
-    (firms_df['latitude'] >= lat_min) & (firms_df['latitude'] <= lat_max) &
-    (firms_df['longitude'] >= lon_min) & (firms_df['longitude'] <= lon_max)
-]
+col1, col2 = st.columns([3, 2])
 
 # Filter by date
 filtered_df['acq_date'] = pd.to_datetime(filtered_df['acq_date']).dt.date
@@ -65,31 +60,19 @@ filtered_df = filtered_df[filtered_df['acq_date'] >= cutoff_date]
 if (confidence != ""):
     filtered_df = filtered_df[filtered_df['confidence'] == confidence]
 
-###########################################
-
-# Apply only time range + confidence filters (ignore region filter)
-df_time_conf = firms_df.copy()
-df_time_conf['acq_date'] = pd.to_datetime(df_time_conf['acq_date']).dt.date
-df_time_conf = df_time_conf[df_time_conf['acq_date'] >= cutoff_date]
-
-# Confidence filter
-df_time_conf = df_time_conf[df_time_conf['confidence'] == confidence]
-
-# Map each fire to a region based on lat/lon bounds
-def get_region(lat, lon):
-    for region, (lon_min, lat_min, lon_max, lat_max) in region_bounds.items():
-        if lat_min <= lat <= lat_max and lon_min <= lon <= lon_max:
-            return region
-    return "Other"
-
-df_time_conf['region'] = df_time_conf.apply(lambda row: get_region(row['latitude'], row['longitude']), axis=1)
-
 # Group by region
-region_counts = df_time_conf['region'].value_counts().reset_index()
+region_counts = filterd_df['region'].value_counts().reset_index()
 region_counts.columns = ['Region', 'Fire Count']
 
-###########################################
-col1, col2 = st.columns([3, 2])
+with col2:
+    st.subheader("🔥 Fires by Region")
+    st.bar_chart(region_counts.set_index('Region'))
+
+# Filter by region
+filtered_df = firms_df[
+    (firms_df['latitude'] >= lat_min) & (firms_df['latitude'] <= lat_max) &
+    (firms_df['longitude'] >= lon_min) & (firms_df['longitude'] <= lon_max)
+]
 
 # Folium map
 with col1:
@@ -109,11 +92,8 @@ with col1:
 
     st_folium(fire_map, width=500, height=350)
 
-with col2:
-    st.subheader("🔥 Fires by Region")
-    st.bar_chart(region_counts.set_index('Region'))
-        
 ###########################################
+
 #  KPI Metrics
 st.subheader("📊 Key Metrics")
 
