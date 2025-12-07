@@ -7,7 +7,11 @@ from datetime import datetime, timedelta, date
 from folium.plugins import MarkerCluster
 
 firms_df = st.session_state.get("firms_df")
-print(firms_df.head())
+
+if firms_df is None or firms_df.empty:
+    st.warning("No FIRMS data available. Please refresh or check the API.")
+    st.stop()
+
 
 ###########################################
 
