@@ -85,12 +85,12 @@ st_folium(fire_map, width=700)
 st.subheader("📊 Key Metrics")
 st.metric("Total Fires", len(filtered_df))
 avg_frp = round(filtered_df['frp'].mean(), 2)
-    st.metric("Average FRP", avg_frp)
+st.metric("Average FRP", avg_frp)
 
-    day_count = (filtered_df['daynight'] == "D").sum()
-    night_count = (filtered_df['daynight'] == "N").sum()
-    st.metric("Day vs Night", f"{day_count} / {night_count}")
+day_count = (filtered_df['daynight'] == "D").sum()
+night_count = (filtered_df['daynight'] == "N").sum()
+st.metric("Day vs Night", f"{day_count} / {night_count}")
 
-    latest_date = filtered_df['acq_date'].max()
-    st.metric("Latest Detection", str(latest_date))
+latest_date = filtered_df['acq_date'].max()
+st.metric("Latest Detection", str(latest_date))
 
