@@ -62,7 +62,7 @@ filtered_df = filtered_df[filtered_df['confidence'] == confidence]
 ###########################################
 
 #  Wildfire Choropleth Map
-st.subheader(f"🔥 Wildfires in {region}")
+st.subheader(f"🔥 Fire in {region_select}")
 fire_map = folium.Map(location=[(lat_min + lat_max)/2, (lon_min + lon_max)/2], zoom_start=3)
 marker_cluster = MarkerCluster().add_to(fire_map)
 
