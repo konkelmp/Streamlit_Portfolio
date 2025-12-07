@@ -19,8 +19,6 @@ st.markdown(
     FIRMS API is called once a day and caches the last 3 days of data
     
     See data preview below
-
-    Created by Preston Konkel
     """
 )
 
