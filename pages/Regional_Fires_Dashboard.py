@@ -12,7 +12,7 @@ firms_df = st.session_state.get("firms_df")
 st.sidebar.title("Dashboard Filters")
 region = st.sidebar.selectbox("Select Region", ["North America", "South America", "Europe", "Asia", "Africa", "Oceania"])
 time_range = st.sidebar.selectbox("Select Time Range", ["Past Day", "Past 2 Days", "Past 3 Days"])
-confidence = st.siderbar.selectbox("Select Confidence Level", ["Low", "Medium", "High"])
+confidence = st.sidebar.selectbox("Select Confidence Level", ["Low", "Medium", "High"])
 
 # Day Mapping
 days = {"Past Day": 1,
