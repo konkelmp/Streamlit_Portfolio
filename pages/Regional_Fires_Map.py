@@ -12,7 +12,9 @@ firms_df = st.session_state.get("firms_df")
 st.sidebar.title("Dashboard Filters")
 region = st.sidebar.selectbox("Select Region", ["North America", "South America", "Europe", "Asia", "Africa", "Oceania"])
 time_range = st.sidebar.selectbox("Select Time Range", ["Past Day", "Past 2 Days", "Past 3 Days"])
+confidence = st.siderbar.selectbox("Select Confidence Level", ["Low", "Medium", "High"])
 
+# Day Mapping
 days = {"Past Day": 1,
         "Past 2 Days": 2,
         "Past 3 Days": 3}
@@ -31,6 +33,9 @@ region_bounds = {
 }
 lon_min, lat_min, lon_max, lat_max = region_bounds[region]
 
+# Confidence level mapping
+confidence_levels = {"Low": "l", "Medium": "m", "High": "h"}
+
 # Filter by region
 filtered_df = firms_df[
     (firms_df['latitude'] >= lat_min) & (firms_df['latitude'] <= lat_max) &
@@ -40,6 +45,15 @@ filtered_df = firms_df[
 # Filter by date
 filtered_df['acq_date'] = pd.to_datetime(filtered_df['acq_date']).dt.date
 filtered_df = filtered_df[filtered_df['acq_date'] >= cutoff_date]
+
+# Filter by confidence
+if firms_df['confidence'].dtype == 'object':
+    filtered_df = filtered_df[filtered_df['confidence'].isin(confidence_selected)]
+else:
+    filtered_df = filtered_df[
+        (filtered_df['confidence'] >= confidence_selected[0]) &
+        (filtered_df['confidence'] <= confidence_selected[1])
+    ]
 
 #  Wildfire Choropleth Map
 st.subheader(f"🔥 Wildfires in {region}")
