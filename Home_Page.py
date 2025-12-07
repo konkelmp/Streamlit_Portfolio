@@ -1,6 +1,7 @@
 import requests
 import streamlit as st
 import pandas as pd
+import datetime
 
 st.set_page_config(
     page_title="Fire Systems - NASA FIRMS Data Visualization",
