@@ -101,7 +101,7 @@ with col2:
     else:
         st.info("No data available for this selection.")
 
-with col2:
+with col3:
     #  KPI Metrics
     st.subheader("📊 Key Metrics")
     
