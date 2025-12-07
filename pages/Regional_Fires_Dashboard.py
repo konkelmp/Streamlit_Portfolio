@@ -86,7 +86,7 @@ st.subheader("📊 Key Metrics")
 
 st.metric("Total Fires", len(filtered_df))
 avg_frp = round(filtered_df['frp'].mean(), 2)
-st.metric("Average Fire Radiative Power (FRP)", avg_frp)
+st.metric("Average Fire Radiative Power (FRP) in MegaWatts", avg_frp)
 
 day_count = (filtered_df['daynight'] == "D").sum()
 night_count = (filtered_df['daynight'] == "N").sum()
