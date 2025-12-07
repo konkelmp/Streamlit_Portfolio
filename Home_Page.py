@@ -37,4 +37,3 @@ def get_firms_data():
 
 if "firms_df" not in st.session_state:
     st.session_state.firms_df = get_firms_data()
-firms_df = st.session_state.firms_df
