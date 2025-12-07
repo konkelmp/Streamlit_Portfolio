@@ -62,27 +62,39 @@ if (confidence != ""):
 
 ###########################################
 
-#  Fire Choropleth Map
-st.subheader(f"🔥 Fires in {region_select}")
-fire_map = folium.Map(location=[(lat_min + lat_max)/2, (lon_min + lon_max)/2], zoom_start=3)
-marker_cluster = MarkerCluster().add_to(fire_map)
+col1, col2 = st.columns([2, 1])
 
-for _, row in filtered_df.iterrows():
-    folium.CircleMarker(
-        location=[row['latitude'], row['longitude']],
-        radius=3,
-        color='red',
-        fill=True,
-        fill_opacity=0.7,
-        popup=f"Date: {row['acq_date']}"
-    ).add_to(marker_cluster)
+# Folium map
+with col1:
+    st.subheader(f"🔥 Fires in {region_select}")
+    fire_map = folium.Map(location=[(lat_min + lat_max)/2, (lon_min + lon_max)/2], zoom_start=3)
+    marker_cluster = MarkerCluster().add_to(fire_map)
 
-st_folium(fire_map, width=700)
+    for _, row in filtered_df.iterrows():
+        folium.CircleMarker(
+            location=[row['latitude'], row['longitude']],
+            radius=3,
+            color='red',
+            fill=True,
+            fill_opacity=0.7,
+            popup=f"Date: {row['acq_date']} | Confidence: {row['confidence']}"
+        ).add_to(marker_cluster)
 
-# Line chart of fires over last 3 days
-daily_counts = filtered_df.groupby('acq_date').size().reset_index(name='count')
-st.line_chart(daily_counts.set_index('acq_date'))
+    st_folium(fire_map, width=700, height=500)
 
+# Right column: Line chart of daily fire counts
+with col2:
+    st.subheader("📈 Fires Over Time")
+    if not filtered_df.empty:
+        daily_counts = (
+            filtered_df.groupby('acq_date')
+            .size()
+            .reset_index(name='count')
+        )
+        st.line_chart(daily_counts.set_index('acq_date'))
+    else:
+        st.info("No data available for this selection.")
+        
 ###########################################
 
 #  KPI Metrics
