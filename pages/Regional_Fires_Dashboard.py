@@ -17,8 +17,7 @@ firms_df = st.session_state.get("firms_df")
 if firms_df is None or firms_df.empty:
     st.warning("No FIRMS data available. Please refresh or check the API.")
     st.stop()
-
-
+    
 ###########################################
 
 # Sidebar
@@ -50,37 +49,42 @@ confidences = {"All": "", "Low": "l", "Nominal": "n", "High": "h"}
 confidence = confidences[confidence_select]
 
 ###########################################
-col1, col2 = st.columns([3, 2])
 
-# Filter by date
-filtered_df['acq_date'] = pd.to_datetime(filtered_df['acq_date']).dt.date
-filtered_df = filtered_df[filtered_df['acq_date'] >= cutoff_date]
+firms_df['acq_date'] = pd.to_datetime(firms_df['acq_date']).dt.date
+filtered_df = firms_df[firms_df['acq_date'] >= cutoff_date]
 
-# Filter by confidence
-if (confidence != ""):
+# Confidence filter
+if confidence != "":
     filtered_df = filtered_df[filtered_df['confidence'] == confidence]
 
+# Assign region based on lat/lon
+def get_region(lat, lon):
+    for region, (lon_min, lat_min, lon_max, lat_max) in region_bounds.items():
+        if lat_min <= lat <= lat_max and lon_min <= lon <= lon_max:
+            return region
+    return "Other"
+
+filtered_df['region'] = filtered_df.apply(lambda row: get_region(row['latitude'], row['longitude']), axis=1)
+
 # Group by region
-region_counts = filterd_df['region'].value_counts().reset_index()
+region_counts = filtered_df['region'].value_counts().reset_index()
 region_counts.columns = ['Region', 'Fire Count']
+
+col1, col2 = st.columns([3, 2])
 
 with col2:
     st.subheader("🔥 Fires by Region")
     st.bar_chart(region_counts.set_index('Region'))
 
-# Filter by region
-filtered_df = firms_df[
-    (firms_df['latitude'] >= lat_min) & (firms_df['latitude'] <= lat_max) &
-    (firms_df['longitude'] >= lon_min) & (firms_df['longitude'] <= lon_max)
-]
+# Filter by selected region for the map
+region_df = filtered_df[filtered_df['region'] == region_select]
 
-# Folium map
 with col1:
     st.subheader(f"🔥 Fires in {region_select}")
     fire_map = folium.Map(location=[(lat_min + lat_max)/2, (lon_min + lon_max)/2], zoom_start=3)
     marker_cluster = MarkerCluster().add_to(fire_map)
 
-    for _, row in filtered_df.iterrows():
+    for _, row in region_df.iterrows():
         folium.CircleMarker(
             location=[row['latitude'], row['longitude']],
             radius=3,
