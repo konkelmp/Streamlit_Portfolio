@@ -9,7 +9,7 @@ from folium.plugins import MarkerCluster
 st.set_page_config(
     page_title="DASHBOARD",
     page_icon="🔥 🌎 🔥",
-    layout="left"
+    layout="wide"
 )
 
 firms_df = st.session_state.get("firms_df")
@@ -68,7 +68,7 @@ if (confidence != ""):
 
 ###########################################
 
-col1, col2, col3 = st.columns([2, 1, 1])
+col1, col2, col3 = st.columns([2, 2, 1])
 
 # Folium map
 with col1:
