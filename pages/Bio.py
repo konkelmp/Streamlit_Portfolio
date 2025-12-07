@@ -17,7 +17,7 @@ st.write(
 
 # --- Profile Image (Optional) ---
 st.subheader("Profile")
-st.image("assests/profile.jpg", caption="Exploring clarity in code, data, and design.", width=200)
+st.image("assests/hubble-captures-vivid-auroras-in-jupiters-atmosphere_28000029525_o~small.jpg", caption="Exploring clarity in code, data, and design.", width=200)
 st.write("Alt-text: Photo of Jupiter")
 
 # --- Highlights ---
